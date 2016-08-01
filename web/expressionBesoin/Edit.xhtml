@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExpressionBesoinEditDlg" widgetVar="ExpressionBesoinEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditExpressionBesoinTitle}">
+            <h:form id="ExpressionBesoinEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{expressionBesoinController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_montantTotal}" for="montantTotal" />
+                        <p:inputText id="montantTotal" value="#{expressionBesoinController.selected.montantTotal}" title="#{bundle.EditExpressionBesoinTitle_montantTotal}" />
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{expressionBesoinController.selected.id}" title="#{bundle.EditExpressionBesoinTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{expressionBesoinController.selected.total}" title="#{bundle.EditExpressionBesoinTitle_total}" />
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_compteItem}" for="compteItem" />
+                        <p:selectOneMenu id="compteItem" value="#{expressionBesoinController.selected.compteItem}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{compteItemController.itemsAvailableSelectOne}"
+                                           var="compteItemItem"
+                                           itemValue="#{compteItemItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_demandeur}" for="demandeur" />
+                        <p:selectOneMenu id="demandeur" value="#{expressionBesoinController.selected.demandeur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="demandeurItem"
+                                           itemValue="#{demandeurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditExpressionBesoinLabel_dateCreation}" for="dateCreation" />
+                        <p:calendar id="dateCreation" pattern="MM/dd/yyyy" value="#{expressionBesoinController.selected.dateCreation}" title="#{bundle.EditExpressionBesoinTitle_dateCreation}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{expressionBesoinController.update}" value="#{bundle.Save}" update="display,:ExpressionBesoinListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ExpressionBesoinEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ExpressionBesoinEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

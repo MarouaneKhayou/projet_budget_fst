@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDemandeEntreeStockTitle}"></h:outputText>
+        </ui:define>
+
+
+        <ui:define name="body">
+
+
+            <h:form>
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="datedemande" value="Date :  " />
+                    <p:calendar id="datedemande" value="#{livraisonController.datedemande}"  />
+                    <p:commandButton value="OK"  actionListener="#{livraisonController.dateChaged()}"  update=":demandentrenestocklist:datalist , :listdemanenteenstockitem:entrenestockitemdatalist,:listentiteproduit:datalistentiteproduit" />
+                </p:panelGrid>
+            </h:form>
+
+
+            <h:form id="demandentrenestocklist">
+                <p:panelGrid columns="3" >
+                    <p:panel header="#{bundle.ListDemandeEntreeStockTitle}"> 
+
+                        <p:dataTable 
+                            paginator="true"
+                            rows="10"
+                            id="datalist" value="#{livraisonController.items}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Numero"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{item.dateCreation}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"  timeZone="CET"/>
+                                </h:outputText>
+                            </p:column>
+
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Details"/>
+                                </f:facet>
+                                <p:commandButton value=">>"  actionListener="#{livraisonController.getdemandeitems(item)}" update=":listdemanenteenstockitem:entrenestockitemdatalist, :listentiteproduit:datalistentiteproduit"
+
+                                                 />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </p:panelGrid>
+            </h:form>
+
+
+
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-6"  style="margin-left: 2%" >
+
+                    <h:form id="listdemanenteenstockitem"   >
+
+                        <p:panel header="Details Demandes" >
+
+                            <p:dataTable  
+                                paginator="true"
+                                rows="10"
+                                id="entrenestockitemdatalist" value="#{livraisonController.selected.demandeEntreeStockItems}" var="item">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Produit"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.produitItem.produit.libelle}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Description"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.produitItem.produit.description}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantité Commandée"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.qteCommande}"/>
+                                </p:column>
+
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantité Reçue"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.qteRecu}"/>
+                                </p:column>
+
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantité Livrée"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.qteLivre}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Details"/>
+                                    </f:facet>
+                                    <p:commandButton value=">>"  actionListener="#{livraisonController.getdemandeenteeStockItemDetails(item)}" 
+                                                     update=":listentiteproduit:datalistentiteproduit"
+                                                     />
+
+
+                                </p:column>
+
+
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+
+                </div>
+
+
+                <div class="ui-grid-col-4"  style="margin-left: 5%">
+
+                    <h:form  id="listentiteproduit">
+                        <p:panel header="Details Livraisons Produits" >
+                            <p:dataTable 
+                                paginator="true"
+                                rows="10"
+                                id="datalistentiteproduit" value="#{livraisonController.entiteProduitItems}" var="item">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Entité Administrative"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.entiteAdministratif.nom}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantite Commandée"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.qteCommande}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Quantité Livrée"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.qteLivre}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Livrer"/>
+                                    </f:facet>
+
+                                    <p:commandButton value="^^" disabled="#{livraisonController.isdisabled(item)}"
+
+                                                     actionListener="#{livraisonController.changequantites(item)}"
+                                                     oncomplete="PF('MyLivraisonCreateDlg').show()"
+                                                     update=":MyLivraisonCreateForm"
+
+
+
+                                                     />
+                                </p:column>
+                            </p:dataTable>
+
+
+                        </p:panel>
+
+                    </h:form>
+                </div>
+            </div>
+
+            <ui:include src="AddLivraison.xhtml"/>
+
+        </ui:define>
+
+
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="List"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="selectionForm">
+                <p:fieldset legend="Recherche">
+                    <p:panelGrid columns="8">
+                        <p:outputLabel value="Annee" for="annee" style="display:block;width:100px"/>
+                        <p:selectOneMenu id="annee"  style="display:block;width:100px" >
+                            <f:selectItem itemValue="#{''}" itemLabel="--select--"/>
+                            <p:ajax process="annee" />
+                        </p:selectOneMenu>
+                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="Rechercher" />
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+            <br/><br/>
+            <h:form id="budgetListFrom">
+                <p:dataTable id="datalist" value="#{budgetFaculteController.budgetFonctionnementFacultes}" 
+                             var="item"
+                             rowIndexVar="index"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="Montant Affecte" />
+                            <p:column rowspan="2" headerText="Montant Engage" />
+                            <p:column rowspan="2" headerText="Montant Paye" />
+                            <p:column rowspan="2" headerText="Relicat Engage" />
+                            <p:column rowspan="2" headerText="Relicat Paye" />
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="fonctionnement" />
+                            <p:column headerText="investissement" />
+                        </p:row>
+                    </p:columnGroup>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton value="Detail" icon="icon-"/>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

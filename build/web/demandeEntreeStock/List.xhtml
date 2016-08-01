@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="Liste des Demandes"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <br/>
+            <br/>
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4 col-md-12">
+                        <h:form id="DemandeEntreeStockListForm">
+                            <p:panel header="Liste des demandes">
+                                <p:dataTable id="datalist" value="#{demandeEntreeStockController.items}" var="item"
+                                             selectionMode="single" selection="#{demandeEntreeStockController.selected}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Numero"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateCreation}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Montant total"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.montantTotal}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fournisseur"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fournisseur.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Etat"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.getState()}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Affecter"/>
+                                        </f:facet>
+                                        <p:commandButton  actionListener="#{demandeEntreeStockController.setAvailableProduits()}" id="createButton" icon="ui-icon-plus" oncomplete="PF('AffectationDialog').show()" />
+
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="details"/>
+                                        </f:facet>
+                                        <p:commandLink update=":DemandeEntreeStockItemListForm:datalistProduit, :EntiteProduitListForm:datalistEntiteProduit" value="Details"/>
+
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </div>
+
+                    <div class="ui-grid-col-4">
+                        <h:form id="DemandeEntreeStockItemListForm">
+                            <p:panel header="List de produits">
+                                <p:dataTable id="datalistProduit" value="#{demandeEntreeStockController.selected.demandeEntreeStockItems}" var="item"
+                                             selectionMode="single" selection="#{demandeEntreeStockController.demandeEntreeStockItem}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Produit"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.produitItem.produit}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Description"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.produitItem.produit.description}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Quantite Commandee"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.qteCommande}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Quantite recu"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.qteRecu}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Detail"/>
+                                        </f:facet>
+                                        <p:commandLink  update=":EntiteProduitListForm:datalistEntiteProduit" value="Details"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </div>
+
+                    <div class="ui-grid-col-4">
+                        <h:form id="EntiteProduitListForm">
+                            <p:panel header="Liste des Entites">
+                                <p:dataTable id="datalistEntiteProduit" value="#{demandeEntreeStockController.demandeEntreeStockItem.entiteProduit.entiteProduitItems}" var="item"
+                                             selectionMode="single" selection="#{demandeEntreeStockController.entiteProduitItem}"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+
+                                    <p:ajax event="rowSelect"   />
+                                    <p:ajax event="rowUnselect" />
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Entite"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.entiteAdministratif.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Quantite demandee"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.qteCommande}" />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Quantite Recu"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.qteRecu}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <ui:include src="Affectation.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

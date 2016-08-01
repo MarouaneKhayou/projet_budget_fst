@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CreateExpressionBesoinDlg" widgetVar="CreateExpressionBesoinDlg" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCompteTitle}">
+            <h:form id="CreateExpressionBesoinForm">
+                <h:panelGroup id="display">
+                    <p:fieldset legend="Entete">
+                        <p:panelGrid columns="6">
+                            <p:outputLabel value="Demandeur" for="dem" />
+                            <p:inputText value="" id="dem" />
+                            <p:outputLabel value="EntiteADministratif" for="entite" />
+                            <p:selectOneMenu id="entite" value="#{compteController.selectedEntiteAdministratif}" style="display:block;width:150px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Select--"/>
+                                <f:selectItems value="#{compteController.entiteAdministrartifs}"
+                                               var="entite"
+                                               itemValue="#{entite}"
+                                               itemLabel="#{entite.nom}"/>
+                                <p:ajax process="entite" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Compte" for="dem" />
+                            <p:inputText value="" id="cmpt" />
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <br />
+                    <p:fieldset legend="Produit">
+                        <p:panelGrid columns="8">
+                            <p:outputLabel value="Categorie Produit" for="catp" />
+                            <p:selectOneMenu id="catp" value="#{compteController.selectedEntiteAdministratif}" style="display:block;width:150px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Select--"/>
+                                <f:selectItems value="#{compteController.entiteAdministrartifs}"
+                                               var="entite"
+                                               itemValue="#{entite}"
+                                               itemLabel="#{entite.nom}"/>
+                                <p:ajax process="catp" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Libelle" for="lib" />
+                            <p:inputText value="" id="lib" />
+                            <p:outputLabel value="Quantite" for="qt" />
+                            <p:inputText value="" id="qt" />
+                            <p:commandButton  icon="ui-icon-plus"  />
+                            <p:commandButton value="valider" icon="ui-icon" />
+                        </p:panelGrid>
+                        <p:outputLabel value="Description" for="desc" />
+                        <p:inputTextarea id="desc" value="" style="display:block;width:400px" />
+                    </p:fieldset>
+                    <br />
+
+                    <p:dataTable id="listExpress" value="" 
+                                 var="item"
+                                 rowIndexVar="index"
+                                 paginator="true"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Catégorie Produit"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Libelle"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Qte"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Description"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"  oncomplete="PF('CreateExpressionBesoinDlg').show()" />
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" />
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" />
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash" />
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

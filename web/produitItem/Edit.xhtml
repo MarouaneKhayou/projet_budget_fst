@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProduitItemEditDlg" widgetVar="ProduitItemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProduitItemTitle}">
+            <h:form id="ProduitItemEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{produitItemController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditProduitItemLabel_qteDemande}" for="qteDemande" />
+                        <p:inputText id="qteDemande" value="#{produitItemController.selected.qteDemande}" title="#{bundle.EditProduitItemTitle_qteDemande}" />
+                        <p:outputLabel value="#{bundle.EditProduitItemLabel_qteConfirm}" for="qteConfirm" />
+                        <p:inputText id="qteConfirm" value="#{produitItemController.selected.qteConfirm}" title="#{bundle.EditProduitItemTitle_qteConfirm}" />
+                        <p:outputLabel value="#{bundle.EditProduitItemLabel_produit}" for="produit" />
+                        <p:selectOneMenu id="produit" value="#{produitItemController.selected.produit}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{produitController.itemsAvailableSelectOne}"
+                                           var="produitItem"
+                                           itemValue="#{produitItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProduitItemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{produitItemController.selected.id}" title="#{bundle.EditProduitItemTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{produitItemController.update}" value="#{bundle.Save}" update="display,:ProduitItemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProduitItemEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProduitItemEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExpressionBesoinCreateDlg" widgetVar="ExpressionBesoinCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Creer Expression de besoin">
+            <h:form id="ExpressionBesoinCreateForm">
+
+
+                <p:fieldset legend="Entete">
+                    <p:panelGrid columns="8">
+                        <p:outputLabel value="Demandeur" for="demandeur" style="display:block;width:150px"/>
+                        <p:selectOneMenu disabled="true" id="demandeur" value="Demandeur" style="display:block;width:150px" >
+                            <f:selectItem itemValue="#{null}" itemLabel="adminInfo"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Entite Administratif" for="entite" style="display:block;width:150px"/>
+                        <p:inputText id="entite" disabled="true" value="Dépratement Informatique" style="display:block;width:150px" />
+                        <p:outputLabel value="Compte" for="compte" />
+                        <p:inputText id="compte" disabled="true" value="Matériel Informatique" style="display:block;width:150px" />
+                    </p:panelGrid>
+                </p:fieldset>
+                <p:fieldset legend="Produit">
+                    <p:panelGrid columns="8">
+                        <p:outputLabel value="Catégorie Produit" for="cate" style="display:block;width:150px"/>
+                        <p:selectOneMenu id="cate" value="cate" style="display:block;width:150px" >
+                            <f:selectItem itemValue="#{null}" itemLabel="Clavier"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Libelle" for="lib" />
+                        <p:inputText id="lib"  value="" style="display:block;width:150px" />
+                        <p:outputLabel value="Quantité" for="qte" />
+                        <p:inputText id="qte"  value="0" style="display:block;width:150px" />
+                        <p:commandButton id="createButton" icon="ui-icon-plus"  />
+                    </p:panelGrid>
+                    <p:outputLabel value="Description" for="desc" style="display:block;width:150px"/>
+                    <p:inputTextarea style="width: 600px; height: 400px;" id="desc" />
+                </p:fieldset>
+                <br/>
+                <p:dataTable id="datalist" value="#{budgetController.table}" 
+                             var="item"
+                             rowIndexVar="index"
+                             paginator="true"
+
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Catégorie Produit"/>
+                        </f:facet>
+                        <h:outputText value="PC bureau"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Libelle"/>
+                        </f:facet>
+                        <h:outputText value="IBM 8840"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Qte"/>
+                        </f:facet>
+                        <h:outputText value="4"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description"/>
+                        </f:facet>
+                        <h:outputText value="4Go ram, core i5 , disk space 500GB"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="viewButton"   icon="ui-icon-search" />
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" />
+                        <p:commandButton id="deleteButton" icon="ui-icon-trash" />
+                        <p:commandButton  icon="ui-icon" />
+                    </f:facet>
+                </p:dataTable>
+  
+  
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

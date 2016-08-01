@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntiteProduitItemViewDlg" widgetVar="EntiteProduitItemViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEntiteProduitItemTitle}">
+            <h:form id="EntiteProduitItemViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{entiteProduitItemController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEntiteProduitItemLabel_id}"/>
+                        <h:outputText value="#{entiteProduitItemController.selected.id}" title="#{bundle.ViewEntiteProduitItemTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitItemLabel_qteCommande}"/>
+                        <h:outputText value="#{entiteProduitItemController.selected.qteCommande}" title="#{bundle.ViewEntiteProduitItemTitle_qteCommande}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitItemLabel_qteRecu}"/>
+                        <h:outputText value="#{entiteProduitItemController.selected.qteRecu}" title="#{bundle.ViewEntiteProduitItemTitle_qteRecu}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitItemLabel_entiteProduit}"/>
+                        <h:outputText value="#{entiteProduitItemController.selected.entiteProduit}" title="#{bundle.ViewEntiteProduitItemTitle_entiteProduit}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitItemLabel_entiteAdministratif}"/>
+                        <h:outputText value="#{entiteProduitItemController.selected.entiteAdministratif}" title="#{bundle.ViewEntiteProduitItemTitle_entiteAdministratif}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EntiteProduitItemViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

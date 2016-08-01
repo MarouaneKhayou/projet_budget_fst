@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCompteTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="selectionForm">
+                <p:fieldset legend="Recherche">
+                    <p:panelGrid columns="5">
+                        <p:outputLabel value="Annee" style="display:block;width:100px"/>
+                        <p:selectOneMenu id="annee" value="#{expressionBesoinController.selectedAnnee}"  style="display:block;width:100px" >
+                            <f:selectItem itemValue="#{''}" itemLabel="--Select--"/>
+                            <f:selectItems value="#{expressionBesoinController.annees}"
+                                           var="expression"
+                                           itemValue="#{expression}"
+                                           itemLabel="#{expression}" />
+                            <p:ajax process="annee" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Entite Administratif" for="entiteAdministratif" style="display:block;width:130px"/>
+                        <p:selectOneMenu id="entiteAdministratif" value="#{compteController.selectedEntiteAdministratif}" style="display:block;width:150px">
+                            <f:selectItem itemValue="#{null}" itemLabel="--Select--"/>
+                            <f:selectItems value="#{compteController.entiteAdministrartifs}"
+                                           var="entite"
+                                           itemValue="#{entite}"
+                                           itemLabel="#{entite.nom}"/>
+                            <p:ajax process="entiteAdministratif" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton id="btnSelect" value="rechercher" icon="ui-icon-search" actionListener="#{expressionBesoinController.onBtnSelect()}" />
+                    </p:panelGrid>
+                </p:fieldset>
+
+            </h:form>
+<br /><br /><br />
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-6">
+                        <h:form id="CompteListForm">
+                            <p:panel header="Comptes">
+                                <p:dataTable id="datalist" value="#{expressionBesoinController.compteItems}" var="item"
+                                             rowIndexVar="index"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Num"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.compte.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Designation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.compte.designation}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Montant Affecte"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.montantAffecte}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Montant Libre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.montantAffecte.subtract(item.montantEngage)}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Action"/>
+                                        </f:facet>
+                                        <p:commandButton id="viewButton"  actionListener="#{expressionBesoinController.onBtnExpressionBesoinList(index)}"
+                                                         update=":ExpressionBesoinListForm:datalist" icon="ui-icon-search" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h:form id="ExpressionBesoinListForm">
+                            <p:panel header="Expressions de besoin">
+                                <p:dataTable id="datalist" value="#{expressionBesoinController.expressionBesoins}" 
+                                             var="item"
+                                             rowIndexVar="index"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Entite Administratif"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.demandeur.entiteAdministratif.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Demandeur"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.demandeur.nom}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateCreation}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nbre produit"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.total}"/>
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="createButton" icon="ui-icon-plus"  oncomplete="PF('CreateExpressionBesoinDlg').show()" />
+                                        <p:commandButton id="viewButton"   icon="ui-icon-search" />
+                                        <p:commandButton id="editButton"   icon="ui-icon-pencil" />
+                                        <p:commandButton id="deleteButton" icon="ui-icon-trash" />
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="CreateExpressionBesoin.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

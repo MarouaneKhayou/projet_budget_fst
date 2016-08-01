@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Menu Principale</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/loginStyle.css"/>
+    </h:head>
+    <h:body class="bodyLogin">
+
+        <div class="login-card">
+            <img src="resources/img/user.png" style="border-radius: 100%; width: 100px; height: auto"/><br/>
+
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                <h:panelGrid columns="1" cellpadding="0">
+                    <h:outputLabel style="font-size: 11px;" for="username" value="Username:" />
+                    <p:inputText id="username" value="#{userController.selected.login}" required="true" label="username" placeholder="Saisissez votre login" />
+
+                    <h:outputLabel style="font-size: 11px;" for="password" value="Password:" />
+                    <p:password id="password" value="#{userController.selected.password}" required="true" label="password" placeholder="Saisissez votre mot de passe" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="LOGIN" style=" text-align: center;font-size: 14px;
+                                         font-family: 'Arial', sans-serif;font-weight: 700;height: 36px;padding: 0 8px;
+                                         width: 100%;display: block;margin-bottom: 10px;position: relative;"
+                                         update="growl" action="#{userController.seConnnecter()}"/>
+                    </f:facet>  
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <br />
+        <h:link outcome="/livraison/List" value="Show All Livraison Items"/>
+        <br />
+        <h:link outcome="/livraison/List" value="Show All Livraison Items"/>
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
+

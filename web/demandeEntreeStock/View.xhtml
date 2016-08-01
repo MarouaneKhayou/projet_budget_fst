@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DemandeEntreeStockViewDlg" widgetVar="DemandeEntreeStockViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDemandeEntreeStockTitle}">
+            <h:form id="DemandeEntreeStockViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{demandeEntreeStockController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_id}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.id}" title="#{bundle.ViewDemandeEntreeStockTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_type}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.type}" title="#{bundle.ViewDemandeEntreeStockTitle_type}"/>
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_dateCreation}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.dateCreation}" title="#{bundle.ViewDemandeEntreeStockTitle_dateCreation}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_montantTotal}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.montantTotal}" title="#{bundle.ViewDemandeEntreeStockTitle_montantTotal}"/>
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_tva}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.tva}" title="#{bundle.ViewDemandeEntreeStockTitle_tva}"/>
+                        <h:outputText value="#{bundle.ViewDemandeEntreeStockLabel_fournisseur}"/>
+                        <h:outputText value="#{demandeEntreeStockController.selected.fournisseur}" title="#{bundle.ViewDemandeEntreeStockTitle_fournisseur}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DemandeEntreeStockViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

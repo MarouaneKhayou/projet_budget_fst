@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:head>
+            <title>Menu principale</title>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link href="../resources/css/jsfcrud.css" rel="stylesheet"/>
+            <link href="../resources/css/menuStyle.css" rel="stylesheet"/>
+            <script src="../resources/js/jsfcrud.js" language="javaScript" />
+            <script src="../resources/js/jquery.js" language="javaScript" />
+
+            <script>
+                $(function () {
+                    $(".btn_menu").hover(function (evt) {
+                        $("#" + evt.target.id).css("background-image", " url(../resources/img/btn_menu_hover.png)");
+                    });
+                    $(".btn_menu").mouseout(function (evt) {
+                        $("#" + evt.target.id).css("background-image", " url(../resources/img/btn_menu.png)");
+                    });
+                });
+            </script>
+        </h:head>
+    </h:head>
+
+    <h:body>
+
+        <div style="height:100px;">a</div>
+        <div style="height:auto; ">
+
+            <div style="width:50%; display: inline-block;padding-bottom: 20px;" >
+                <center>
+                    <img src="../resources/img/ucam.png" width="254" height="355" style="padding-bottom: 50px;" />
+                </center>
+            </div>
+
+            <div style="width:auto; display: inline-block;">
+                <table>
+                    <tr>
+                        <td><a href="../budgetFaculte/Affectation.xhtml"><div class="btn_menu" id="1" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="../budgetDepartement/List.xhtml"><div class="btn_menu" id="2" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="../expressionBesoin/addExpressionBesoin.xhtml"><div class="btn_menu" id="3" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#"><div class="btn_menu" id="4" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="#"><div class="btn_menu" id="5" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="#"><div class="btn_menu" id="6" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#"><div class="btn_menu" id="7" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="#"><div class="btn_menu" id="8" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                        <td><a href="#"><div class="btn_menu" id="9" style="width:150px; height:145px; background-image: url(../resources/img/btn_menu.png)"></div></a></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div style="height:10%;">b</div>
+
+    </h:body>
+
+
+</html>
+

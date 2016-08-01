@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntiteProduitViewDlg" widgetVar="EntiteProduitViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEntiteProduitTitle}">
+            <h:form id="EntiteProduitViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{entiteProduitController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEntiteProduitLabel_qteCommande}"/>
+                        <h:outputText value="#{entiteProduitController.selected.qteCommande}" title="#{bundle.ViewEntiteProduitTitle_qteCommande}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitLabel_qteRecu}"/>
+                        <h:outputText value="#{entiteProduitController.selected.qteRecu}" title="#{bundle.ViewEntiteProduitTitle_qteRecu}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitLabel_id}"/>
+                        <h:outputText value="#{entiteProduitController.selected.id}" title="#{bundle.ViewEntiteProduitTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewEntiteProduitLabel_demandeEntreeStockItem}"/>
+                        <h:outputText value="#{entiteProduitController.selected.demandeEntreeStockItem}" title="#{bundle.ViewEntiteProduitTitle_demandeEntreeStockItem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EntiteProduitViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

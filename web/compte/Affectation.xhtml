@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCompteTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="selectionCompteForm">
+                <p:growl id="message" showDetail="true" />  
+                
+                    <p:fieldset legend="Affectation Compte">
+                        <p:panelGrid columns="7">
+
+                            <p:outputLabel value="Annee" style="display:block;width:100px"/>
+                            <p:selectOneMenu id="annee" value="#{compteController.selectedAnnee}"  style="display:block;width:100px" >
+                                <f:selectItem itemValue="#{''}" itemLabel="--Select--"/>
+                                <f:selectItems value="#{compteController.annees}"
+                                               var="var"
+                                               itemValue="#{var}"
+                                               itemLabel="#{var}" />
+                                <p:ajax process="annee" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Entite Administratif" for="entiteAdministratif" style="display:block;width:130px"/>
+                            <p:selectOneMenu id="entiteAdministratif" value="#{compteController.selectedEntiteAdministratif}" style="display:block;width:150px">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Select--"/>
+                                <f:selectItems value="#{compteController.entiteAdministrartifs}"
+                                               var="entiteAdminItem"
+                                               itemValue="#{entiteAdminItem}"
+                                               itemLabel="#{entiteAdminItem.nom}"/>
+                                <p:ajax process="entiteAdministratif" />
+                            </p:selectOneMenu>
+                            <p:commandButton id="btnSelect" value="select" actionListener="#{compteController.onBtnSelect()}"
+                                             update=":growl, :infoBudgetInvestissementForm, :infoBudgetFonctionnementForm, :affectationForm"/>
+                            <p:commandButton id="btnValider" value="Valider" actionListener="#{compteController.onBtnValider()}" update=""/>
+                            <p:commandButton id="btnAnnuler" value="Annuler" actionListener="#{compteController.onBtnAnnuler()}" update="" >
+                                <p:confirm header="Confirmation" message="Etes vous sur d'annuler cette operation ?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                        </p:panelGrid>
+                    </p:fieldset>
+                
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+            <br/>
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <h:form id="affectationForm">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Compte" for="compte" style="display:block;width:50px"/> 
+                                <p:selectOneMenu id="compte" value="#{compteController.selectedCompte}" style="display:block;width:150px">
+                                    <f:selectItem itemValue="#{null}" itemLabel="--Select--"/>
+                                    <f:selectItems value="#{compteController.comptes}"
+                                                   var="item"
+                                                   itemValue="#{item}"
+                                                   itemLabel="#{item.designation}"/>
+                                    <p:ajax process="compte" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Budget" for="compte" style="display:block;width:50px"/> 
+                                <p:selectOneMenu id="typeAff" value="#{compteController.typeAffectation}" style="display:block;width:150px">
+                                    <f:selectItem itemValue="#{1}" itemLabel="Fonctionnement et Investissement"/>
+                                    <f:selectItem itemValue="#{2}" itemLabel="Fonctionnement"/>
+                                    <f:selectItem itemValue="#{3}" itemLabel="Investissement"/>    
+                                    <p:ajax process="typeAff" update="fonctionnementAffecte, investissementAffecte, totalAffecte, fonctionnementAffecteLabel, investissementAffecteLabel" />
+                                </p:selectOneMenu>
+                                
+                                
+                                <p:outputLabel id="fonctionnementAffecteLabel" rendered="#{(compteController.typeAffectation == 1 || compteController.typeAffectation == 2)?'true':'false'}" value="Montant Affecte (Budget fonctionnement)" for="fonctionnementAffecte" style="display:block;width:130px"/>
+                                <p:inputText  id="fonctionnementAffecte" rendered="#{(compteController.typeAffectation == 1 || compteController.typeAffectation == 2)?'true':'false'}" value="#{compteController.selectedCompteItem.montantAffecteFonctionnement}" onkeypress="" />
+                                
+                                <p:outputLabel id="investissementAffecteLabel" rendered="#{(compteController.typeAffectation == 1 || compteController.typeAffectation == 3 )?'true':'false'}" value="Montant Affecte (Budget Investissment) " for="investissementAffecte" style="display:block;width:130px"/>
+                                <p:inputText  id="investissementAffecte" rendered="#{(compteController.typeAffectation == 1 || compteController.typeAffectation == 3 )?'true':'false'}" value="#{compteController.selectedCompteItem.montantAffecteInvestissement}" />
+                                
+                                <p:outputLabel value="Montant Total Affecte" for="totalAffecte" style="display:block;width:130px"/>
+                                
+                                <p:inputText id="totalAffecte" value="#{compteController.montantTotalAffecte()}" disabled="true" />
+                               
+                                <p:outputLabel value="Montant Max" for="max" style="display:block;width:130px"/>
+                                <p:inputText id="max" value="" disabled="true" />
+                                <p:commandButton id="btnAjouter" value="Ajouter" actionListener="#{compteController.onBtnAjout()}" 
+                                                 update=":growl, :infoBudgetFonctionnementForm, :infoBudgetInvestissementForm, affectationForm, CompteItemListForm:datalist"/>
+                            </p:panelGrid>
+                        </h:form>
+                    </div>
+
+                    <div class="ui-grid-col-4"> 
+                        <h:form id="infoBudgetFonctionnementForm">
+                            <p:panel header="Budget de fonctionnement">
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Montant Affecte" for="montantFAffecte" style="display:block;width:100px"/>
+                                    <p:inputText id="montantFAffecte" value="" disabled="true" />
+                                    <p:outputLabel value="Montant Libre" for="montantFLibre" style="display:block;width:100px"/>
+                                    <p:inputText id="montantFLibre" value="" disabled="true" />
+                                </p:panelGrid>
+                            </p:panel>
+                        </h:form>
+                    </div>
+
+                    <div class="ui-grid-col-4">
+                        <h:form id="infoBudgetInvestissementForm">
+                            <p:panel header="Budget d'Investissement">
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Montant Affecte" for="montantIAffecte" style="display:block;width:100px"/>
+                                    <p:inputText id="montantIAffecte" value="" disabled="true" />
+                                    <p:outputLabel value="Montant Libre" for="montantILibre" style="display:block;width:100px"/>
+                                    <p:inputText id="montantILibre" value="" disabled="true" />
+                                </p:panelGrid>
+                            </p:panel>
+                        </h:form>
+                    </div>
+
+                </div>
+            </div>
+
+            <h:form id="CompteItemListForm">
+                <p:panel header="Comptes">
+                    <p:dataTable id="datalist" value="#{compteController.compteItems}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Num"/>
+                            </f:facet>
+                            
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Designation"/>
+                            </f:facet>
+                            <h:outputText value="#{item.compte.designation}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantAffecte}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantAffecte}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantEngage}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantEngage}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantPaye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantPaye}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" />
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" />
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

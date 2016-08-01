@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReceptionItemCreateDlg" widgetVar="ReceptionItemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateReceptionItemTitle}">
+            <h:form id="ReceptionItemCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{receptionItemController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{receptionItemController.selected.id}" title="#{bundle.CreateReceptionItemTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_produit}" for="produit" />
+                        <p:selectOneMenu id="produit" value="#{receptionItemController.selected.produit}" >
+                            <f:selectItems value="#{produitController.itemsAvailableSelectOne}"
+                                           var="produitItem"
+                                           itemValue="#{produitItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_qte}" for="qte" />
+                        <p:inputText id="qte" value="#{receptionItemController.selected.qte}" title="#{bundle.CreateReceptionItemTitle_qte}" />
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_qteAvoir}" for="qteAvoir" />
+                        <p:inputText id="qteAvoir" value="#{receptionItemController.selected.qteAvoir}" title="#{bundle.CreateReceptionItemTitle_qteAvoir}" />
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_magasin}" for="magasin" />
+                        <p:selectOneMenu id="magasin" value="#{receptionItemController.selected.magasin}" >
+                            <f:selectItems value="#{magasinController.itemsAvailableSelectOne}"
+                                           var="magasinItem"
+                                           itemValue="#{magasinItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateReceptionItemLabel_reception}" for="reception" />
+                        <p:selectOneMenu id="reception" value="#{receptionItemController.selected.reception}" >
+                            <f:selectItems value="#{receptionController.itemsAvailableSelectOne}"
+                                           var="receptionItem"
+                                           itemValue="#{receptionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{receptionItemController.create}" value="#{bundle.Save}" update="display,:ReceptionItemListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReceptionItemCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ReceptionItemCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
