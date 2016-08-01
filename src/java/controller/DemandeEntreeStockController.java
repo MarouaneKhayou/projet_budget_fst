@@ -45,6 +45,7 @@ public class DemandeEntreeStockController implements Serializable {
 
     @EJB
     private service.DemandeEntreeStockFacade ejbFacade;
+    
     @EJB
     private service.DemandeEntreeStockItemFacade demandeEntreeStockItemFacade;
     @EJB
